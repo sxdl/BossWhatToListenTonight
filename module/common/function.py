@@ -11,6 +11,7 @@ from time import time
 from base64 import b64decode
 import json
 import time
+import pickle
 
 
 def shell_command(command: str, cwd=None, stdout=None, stderr=None):
@@ -93,9 +94,4 @@ def setItem(key, value):
         data[key] = value
         f.seek(0)
         f.write(data)
-
-
-def dump_json(data, path):
-    with open(path, 'w+') as f:
-        json.dump(data, f, ensure_ascii=False)
 

@@ -226,7 +226,7 @@ class NeteaseCloudMusicProxy:
                     for cc in c:
                         user_id = cc['user']['userId']
                         comm = cc['content']
-                        comm = str(comm.encode('gb18030'))[2:-1]
+                        # comm = comm.encode('gb18030') # str(comm.encode('gb18030'))[2:-1]
                         comments.append(dict(zip(['userId', 'content'], [user_id, comm])))
                     before = c[-1]['time']
                     time.sleep(0.1)

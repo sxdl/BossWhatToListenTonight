@@ -62,13 +62,14 @@ def spider_song_info(uid):
     artist_dict = dict(zip(song_ids, song_artists))
 
     for song_id in song_ids:
-        song_path = f"{SONG_INFO_STORAGE_DIR}{song_id}.json"
+        song_path = f"{SONG_INFO_STORAGE_DIR}{song_id}.pickle"
         # 下载前判断是否已经下载，跳过
         if os.path.exists(song_path):
             print(f"already download, pass {song_id}")
             continue
 
         artist = artist_dict.get(song_id)  # artist
+        artist = [dict([('id', x.get('id')), ('name', x.get('name'))]) for x in artist]  # 删除artist冗余信息
         song_wiki = ncp.get_song_wiki(song_id)  # wiki (曲风、推荐标签、语种、BPM)
         song_comments = ncp.get_song_comments(song_id)  # comments
 
@@ -78,8 +79,27 @@ def spider_song_info(uid):
             'comments': song_comments
         }
 
-        function.dump_json(song_info, song_path)
+        fileio.dump_pickle(song_info, song_path)
 
 
-def get_song_info(song_id):
-    pass
+def load_song_info(song_id):
+    song_path = f"{SONG_INFO_STORAGE_DIR}{song_id}.pickle"
+    song_data = fileio.load_pickle(song_path)
+    return song_data
+
+
+def get_song_ar(song_data):
+    return song_data.get('ar')
+
+
+def get_song_wiki(song_data):
+    return song_data.get('wiki')
+
+
+def get_song_comments(song_data):
+    """
+    评论编码：gb18030
+    :param song_data:
+    :return:
+    """
+    return song_data.get('comments')
