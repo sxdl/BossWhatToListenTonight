@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>输入uid并提交表单</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <h1>输入uid并提交表单</h1>
+    <form onsubmit="return validateForm()" action="home.index">
+      <label for="uid">请输入uid：</label>
+      <input type="text" id="uid" name="uid">
+      <br><br>
+      <input type="submit" value="提交">
+    </form>
+
+    <script>
+      function validateForm() {
+        var uid = document.getElementById("uid").value;
+        if (uid == "") {
+          alert("请输入uid");
+          return false;
+        }
+        if (!/^\d+$/.test(uid)) {
+          alert("请输入数字");
+          return false;
+        }
+        return true;
+      }
+    </script>
+  </body>
+</html>

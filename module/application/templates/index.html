@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>个人听歌偏好分析</title>
+	<style>
+		body {
+			background-color: #f2f2f2;
+		}
+		h1 {
+			text-align: center;
+			margin-top: 50px;
+		}
+		form {
+			width: 50%;
+			margin: 50px auto;
+			background-color: #fff;
+			padding: 20px;
+			border-radius: 10px;
+			box-shadow: 0 0 10px rgba(0,0,0,0.2);
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+		}
+		label {
+			display: block;
+			margin-bottom: 10px;
+			font-weight: bold;
+		}
+		input[type="text"] {
+			display: block;
+			width: 100%;
+			padding: 10px;
+			font-size: 16px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			box-sizing: border-box;
+			margin-right: 10px;
+		}
+		input[type="submit"] {
+			background-color: #4CAF50;
+			color: #fff;
+			border: none;
+			padding: 10px 20px;
+			font-size: 16px;
+			border-radius: 5px;
+			cursor: pointer;
+			transition: background-color 0.3s ease;
+		}
+		input[type="submit"]:hover {
+			background-color: #3e8e41;
+		}
+	</style>
+	<script>
+		function validateForm() {
+        var uid = document.getElementById("uid").value;
+        if (uid == "") {
+          alert("请输入uid");
+          return false;
+        }
+        if (!/^\d+$/.test(uid)) {
+          alert("请输入数字");
+          return false;
+        }
+        return true;
+      }
+	</script>
+</head>
+<body>
+	<h1>个人听歌偏好分析</h1>
+	<form method="post" onsubmit="return validateForm()" action="/">
+		<label for="uid">网易云音乐UID：</label>
+		<input type="text" id="uid" name="uid" required>
+		<input type="submit" value="确认">
+	</form>
+</body>
+</html>
