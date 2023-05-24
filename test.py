@@ -14,10 +14,11 @@ from module.application import server
 from module.common.const import FLASK_CWD, FLASK_RUN_COMMAND
 
 
-cwd = os.getcwd()
-os.chdir("./module/application/")
+### 测试单个模块时取消注释 ###
+# cwd = os.getcwd()
+# os.chdir("./module/application/")
 from module.statistics import statistics
-os.chdir(cwd)
+# os.chdir(cwd)
 
 
 # # server.join()
@@ -62,14 +63,14 @@ if __name__ == "__main__":
     # test_uid = 6280920254
 
 
-    # flask_server = server.WebServer(FLASK_RUN_COMMAND, FLASK_CWD)
-    # flask_server.run()
+    flask_server = server.WebServer(FLASK_RUN_COMMAND, FLASK_CWD)
+    flask_server.run()
 
     time.sleep(3)
 
     # test_song_info("1854902495")
 
-    test_fav_art("1526176774")
+    # test_fav_art("1526176774")
     # test_load_song_info("1382367245")
 
     time.sleep(300)

@@ -150,6 +150,18 @@ class NeteaseCloudMusicProxy:
             details.extend(s.get('songs'))
         return details
 
+
+    def get_artist_detail(self, aid):
+        """
+        根据歌手id获取歌手详情，返回（id, name, 头像url）
+        :param aid: 歌手id
+        :return: (id, name, 头像url)
+        """
+        details = api_get(f'/artist/detail?id={aid}').json()
+        artist_details = details['data']['artist']
+        return artist_details['id'], artist_details['name'], artist_details['avatar']
+
+
     def get_song_wiki(self, song_id):
         """
         获取音乐百科（回忆坐标/音乐百科{曲风, 推荐标签, 语种}/相似歌曲/相关歌单）

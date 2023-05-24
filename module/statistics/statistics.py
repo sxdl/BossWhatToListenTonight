@@ -88,11 +88,12 @@ def spider_song_info(iid, mode=0):
         fileio.dump_pickle(song_info, song_path)
 
 
-def rank_fav_ar(uid):
+def rank_fav_ar(uid, limit=10):
     """
-    收藏歌曲歌手排行，后期需要剔除无 id歌手（id=0）
+    收藏歌曲歌手排行，需要剔除无 id歌手（id=0）
+    :param limit: 返回最大歌手数量
     :param uid:
-    :return:
+    :return:(id, name, 头像url, 出现次数)
     """
     fav_songs = get_user_fav_song(uid)
     ar_dict = dict()
@@ -101,7 +102,13 @@ def rank_fav_ar(uid):
         ar_id_list = get_song_ar(song_info)
         for ar_id in ar_id_list:
             ar_dict[ar_id.get('id')] = ar_dict.get(ar_id.get('id'), 0) + 1
-    return sorted(ar_dict.items(), key=lambda x: (x[1], x[0]), reverse=True)
+    if ar_dict.get(0):  # 剔除无 id歌手(id=0)
+        ar_dict.pop(0)
+    sorted_art = sorted(ar_dict.items(), key=lambda x: (x[1], x[0]), reverse=True)
+    if len(sorted_art) > limit:
+        sorted_art = sorted_art[:limit]
+    sorted_art_detail = [(ncp.get_artist_detail(x[0]), x[1]) for x in sorted_art]
+    return sorted_art_detail
 
 
 def load_song_info(song_id):
