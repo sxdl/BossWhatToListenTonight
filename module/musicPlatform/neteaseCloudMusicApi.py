@@ -6,7 +6,7 @@ description: 网易云api调用  https://github.com/Binaryify/NeteaseCloudMusicA
 """
 import time
 from subprocess import PIPE, STDOUT
-from module.common.const import NETEASE_CLOUD_MUSIC_API_PATH, NETEASE_CLOUD_MUSIC_SERVER_RUNNING_KEYWORD, SONG_INFO_STORAGE_DIR
+from module.common.const import NETEASE_CLOUD_MUSIC_API_PATH, NETEASE_CLOUD_MUSIC_SERVER_RUNNING_KEYWORD, SONG_INFO_STORAGE_DIR, MAX_COMMENT_NUM
 from module.common.function import shell_command, timestamp, api_get, save_img, base642bytes, setItem
 from threading import Thread
 from module.common import fileio
@@ -137,7 +137,7 @@ class NeteaseCloudMusicProxy:
 
     def get_song_detail(self, sid: list):
         """
-        根据音乐id获取歌曲详情
+        根据音乐id获取歌曲详情（如果歌手无id，id为0）
         :param sid:
         :return:
         """
@@ -218,7 +218,7 @@ class NeteaseCloudMusicProxy:
             comments = []
             try:
                 test = api_get(f'/comment/music?id={song_id}').json()
-                total_comments = test.get('total')
+                total_comments = min(test.get('total'), MAX_COMMENT_NUM)
                 before = int(test.get('comments')[0]['time']) + 1
                 for i in range(0, total_comments, 20):
                     s = api_get(f'/comment/music?id={song_id}&limit=20&before={before}').json()

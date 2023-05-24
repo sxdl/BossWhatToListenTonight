@@ -28,7 +28,7 @@ def get_user_profile(uid):
 
 def get_user_fav_song(uid, reload=False):
     """
-    从本地获取用户收藏歌曲id列表，如果本地没有，则爬取数据并保存
+    从本地获取用户收藏歌曲id列表，如果本地没有，则爬取用户收藏歌曲数据并保存
     :param uid:
     :param reload:
     :return: list
@@ -48,13 +48,19 @@ def get_user_fav_song(uid, reload=False):
     return song_ids
 
 
-def spider_song_info(uid):
+def spider_song_info(iid, mode=0):
     """
     爬取歌曲的 作曲、曲风标签和评论信息
-    :param uid:
+    :param mode: mode=0 传入 用户id；mode=1 传入 歌曲id
+    :param iid: 用户uid：用户收藏的所有歌曲的歌曲信息 | 歌曲sid：单个歌曲的歌曲信息
     :return:
     """
-    song_ids = get_user_fav_song(uid)
+    if mode == 0:
+        song_ids = get_user_fav_song(iid)
+    elif mode == 1:
+        song_ids = [iid]
+    else:
+        raise ValueError("Invalid mode value!")
 
     # artist
     song_details = ncp.get_song_detail(song_ids)
@@ -82,8 +88,33 @@ def spider_song_info(uid):
         fileio.dump_pickle(song_info, song_path)
 
 
+def rank_fav_ar(uid):
+    """
+    收藏歌曲歌手排行，后期需要剔除无 id歌手（id=0）
+    :param uid:
+    :return:
+    """
+    fav_songs = get_user_fav_song(uid)
+    ar_dict = dict()
+    for song in fav_songs:
+        song_info = load_song_info(song)
+        ar_id_list = get_song_ar(song_info)
+        for ar_id in ar_id_list:
+            ar_dict[ar_id.get('id')] = ar_dict.get(ar_id.get('id'), 0) + 1
+    return sorted(ar_dict.items(), key=lambda x: (x[1], x[0]), reverse=True)
+
+
 def load_song_info(song_id):
+    """
+    导入pickle格式的音乐信息
+    :param song_id:
+    :return:
+    """
     song_path = f"{SONG_INFO_STORAGE_DIR}{song_id}.pickle"
+    # 判断音乐信息是否已经存在
+    if not os.path.exists(song_path):
+        print(f"not download yet, download {song_id}")
+        spider_song_info(song_id, mode=1)
     song_data = fileio.load_pickle(song_path)
     return song_data
 
@@ -99,7 +130,5 @@ def get_song_wiki(song_data):
 def get_song_comments(song_data):
     """
     评论编码：gb18030
-    :param song_data:
-    :return:
     """
     return song_data.get('comments')

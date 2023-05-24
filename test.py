@@ -13,10 +13,12 @@ from module.common import function
 from module.application import server
 from module.common.const import FLASK_CWD, FLASK_RUN_COMMAND
 
+
 cwd = os.getcwd()
 os.chdir("./module/application/")
 from module.statistics import statistics
 os.chdir(cwd)
+
 
 # # server.join()
 #
@@ -29,9 +31,19 @@ os.chdir(cwd)
 
 def test_fav_art(uid):
     """
+    test for 歌手排行
+    :param uid:
+    :return:
+    """
+    ar_rank = statistics.rank_fav_ar(uid)
+    time.sleep(3)
+
+
+def test_song_info(uid):
+    """
     test for 爬取歌曲音乐信息
     """
-    statistics.spider_song_info(uid)
+    statistics.spider_song_info(uid, mode=1)
     time.sleep(3)
 
 
@@ -47,13 +59,18 @@ def test_load_song_info(uid):
 
 
 if __name__ == "__main__":
+    # test_uid = 6280920254
+
+
     # flask_server = server.WebServer(FLASK_RUN_COMMAND, FLASK_CWD)
     # flask_server.run()
-    #
-    time.sleep(5)
 
-    # test_fav_art("1526176774")
-    test_load_song_info("1382367245")
+    time.sleep(3)
+
+    # test_song_info("1854902495")
+
+    test_fav_art("1526176774")
+    # test_load_song_info("1382367245")
 
     time.sleep(300)
     # flask_server.stop()

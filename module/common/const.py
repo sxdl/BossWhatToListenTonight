@@ -19,3 +19,5 @@ SONG_INFO_STORAGE_DIR = "./local/songs/"
 
 USER_FAV_SONG_DIR = "./local/user/"  # 用户收藏歌曲id保存目录
 FAV_SONG_FILE = "fav_song.txt"  # 用户收藏歌曲id文件名
+
+MAX_COMMENT_NUM = 100  # 单只歌曲爬取评论的最大数量
