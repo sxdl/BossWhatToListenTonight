@@ -36,8 +36,8 @@
     }
 
     .artist img {
-      width: 50px;
-      height: 50px;
+      width: 80px;
+      height: 80px;
       margin-right: 10px;
     }
 
@@ -48,8 +48,8 @@
     }
 
     .song img {
-      width: 50px;
-      height: 50px;
+      width: 100px;
+      height: 100px;
       margin-right: 10px;
     }
 
@@ -87,28 +87,18 @@
 
   <div class="section">
     <h2 class="section-title">Top Played Songs</h2>
-    <div class="song">
-      <img src="/static/logo.jpg" alt="Song 1">
-      <div class="song-info">
-        <h3>Song 1</h3>
-        <p>Play Count: 100</p>
-        <audio controls>
-          <source src="song1.mp3" type="audio/mpeg">
-          Your browser does not support the audio element.
-        </audio>
+    {% for song in song_list %}
+      <div class="song">
+        <img src="{{ song['song']['al']['picUrl'] }}" alt="{{ song['song']['name'] }}">
+        <div class="song-info">
+          <h3>{{ song['song']['name'] }}</h3>
+          <p>Play Count: {{ song['playCount'] }}</p>
+          <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86
+                   src="//music.163.com/outchain/player?type=2&id={{ song['song']['id'] }}&auto=1&height=66">
+          </iframe>
+        </div>
       </div>
-    </div>
-    <div class="song">
-      <img src="/static/logo.jpg" alt="Song 2">
-      <div class="song-info">
-        <h3>Song 2</h3>
-        <p>Play Count: 80</p>
-        <audio controls>
-          <source src="song2.mp3" type="audio/mpeg">
-          Your browser does not support the audio element.
-        </audio>
-      </div>
-    </div>
+    {% endfor %}
     <!-- Add more song entries -->
   </div>
 

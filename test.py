@@ -29,6 +29,15 @@ from module.statistics import statistics
 # playlist = ncm.get_song_wiki('1396905934')
 # print(playlist)
 
+def test_fav_song(uid):
+    """
+    test for 听歌次数排行
+    :param uid:
+    :return:
+    """
+    favsong = statistics.rank_fav_song(uid)
+    time.sleep(3)
+
 
 def test_fav_art(uid):
     """
@@ -69,7 +78,7 @@ if __name__ == "__main__":
     time.sleep(3)
 
     # test_song_info("1854902495")
-
+    # test_fav_song("1526176774")
     # test_fav_art("1526176774")
     # test_load_song_info("1382367245")
 

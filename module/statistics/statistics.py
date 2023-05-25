@@ -126,6 +126,18 @@ def load_song_info(song_id):
     return song_data
 
 
+def rank_fav_song(uid, limit=10):
+    """
+    list[{'playCount', 'score', 'song': {'name', 'id', 'al': {'picUrl'}}}]
+    :param uid:
+    :param limit:
+    :return:
+    """
+    fav_songs = ncp.get_user_record(uid, mode=0)
+    if len(fav_songs) > limit:
+        fav_songs = fav_songs[:limit]
+    return fav_songs
+
 def get_song_ar(song_data):
     return song_data.get('ar')
 

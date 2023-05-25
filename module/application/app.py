@@ -33,7 +33,8 @@ def home_get(uid):
 
 @app.route('/dashboard.html/<uid>')
 def dashboard_get(uid):
-    rank_fav_art = statistics.rank_fav_ar(uid, limit=3)
-    print(f"dashboard: {rank_fav_art}")
-    return render_template('dashboard.html', artists=rank_fav_art)
+    rank_fav_art = statistics.rank_fav_ar(uid, limit=10)
+    rank_fav_songs = statistics.rank_fav_song(uid, limit=10)
+    # print(f"dashboard: {rank_fav_art}")
+    return render_template('dashboard.html', artists=rank_fav_art, song_list=rank_fav_songs)
 

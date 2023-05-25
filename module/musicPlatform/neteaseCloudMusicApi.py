@@ -133,7 +133,10 @@ class NeteaseCloudMusicProxy:
         :param mode:mode=1时只返回 weekData, mode=0 时返回 allData
         :return:
         """
-        return api_get(f'/user/record?uid={uid}&type={mode}').json()['allData']
+        if mode == 0:
+            return api_get(f'/user/record?uid={uid}&type={mode}').json()['allData']
+        elif mode == 1:
+            return api_get(f'/user/record?uid={uid}&type={mode}').json()['weekData']
 
     def get_song_detail(self, sid: list):
         """
