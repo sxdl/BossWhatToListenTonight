@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>User Data Visualization</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333333;
+    }
+
+    h2 {
+      color: #555555;
+    }
+
+    .section {
+      margin-bottom: 40px;
+      background-color: #ffffff;
+      padding: 20px;
+    }
+
+    .section-title {
+      margin-bottom: 20px;
+    }
+
+    .artist {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .artist img {
+      width: 50px;
+      height: 50px;
+      margin-right: 10px;
+    }
+
+    .song {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .song img {
+      width: 50px;
+      height: 50px;
+      margin-right: 10px;
+    }
+
+    .song .play-count {
+      font-weight: bold;
+    }
+
+    .word-cloud {
+      width: 100%;
+      height: 300px;
+      background-color: #ffffff;
+      border: 1px solid #cccccc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>User Data Visualization</h1>
+
+  <div class="section">
+    <h2 class="section-title">Top Favorite Artists</h2>
+    {% for ar in artists %}
+      <div class="artist">
+        <img src="{{ ar[0][2] }}" alt="{{ ar[0][1] }}">
+        <div class="artist-info">
+          <h3>{{ ar[0][1] }}</h3>
+          <p>Occurrences: {{ ar[1] }}</p>
+        </div>
+      </div>
+    {% endfor %}
+    <!-- Add more artist entries -->
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">Top Played Songs</h2>
+    <div class="song">
+      <img src="/static/logo.jpg" alt="Song 1">
+      <div class="song-info">
+        <h3>Song 1</h3>
+        <p>Play Count: 100</p>
+        <audio controls>
+          <source src="song1.mp3" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio>
+      </div>
+    </div>
+    <div class="song">
+      <img src="/static/logo.jpg" alt="Song 2">
+      <div class="song-info">
+        <h3>Song 2</h3>
+        <p>Play Count: 80</p>
+        <audio controls>
+          <source src="song2.mp3" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio>
+      </div>
+    </div>
+    <!-- Add more song entries -->
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">Genre Tags Word Cloud</h2>
+    <div class="word-cloud">
+      <!-- Add your word cloud implementation-->
+        <div id="wordCloud"></div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.3.0/dist/echarts.min.js"></script>
+  <script>
+    // Word cloud data
+    const wordCloudData = [
+      { name: "Pop", value: 30 },
+      { name: "Rock", value: 20 },
+      { name: "Hip Hop", value: 15 },
+      { name: "R&B", value: 12 },
+      // Add more word cloud data
+    ];
+
+    // Word cloud options
+    const option = {
+      series: [{
+        type: 'wordCloud',
+        shape: 'circle',
+        left: 'center',
+        top: 'center',
+        width: '80%',
+        height: '80%',
+        data: wordCloudData,
+        textStyle: {
+          normal: {
+            fontFamily: 'Arial, sans-serif',
+            fontWeight: 'bold',
+            color: function () {
+              return 'rgb(' +
+                Math.round(Math.random() * 160) +
+                ', ' + Math.round(Math.random() * 160) +
+                ', ' + Math.round(Math.random() * 160) + ')';
+            }
+          }
+        }
+      }]
+    };
+
+    // Initialize and render the word cloud chart
+    const wordCloudChart = echarts.init(document.getElementById('wordCloud'));
+    wordCloudChart.setOption(option);
+  </script>
+</body>
+</html>

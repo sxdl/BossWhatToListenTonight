@@ -15,9 +15,9 @@ PERSONAL_UID = '1526176774'
 FLASK_RUN_COMMAND = r"flask run --debug"
 FLASK_CWD = "./module/application"
 
-SONG_INFO_STORAGE_DIR = "./local/songs/"
+SONG_INFO_STORAGE_DIR = "../../local/songs/"  # "./local/songs/"
 
-USER_FAV_SONG_DIR = "./local/user/"  # 用户收藏歌曲id保存目录
+USER_FAV_SONG_DIR = "../../local/user/"  # "./local/user/"  # 用户收藏歌曲id保存目录
 FAV_SONG_FILE = "fav_song.txt"  # 用户收藏歌曲id文件名
 
 MAX_COMMENT_NUM = 100  # 单只歌曲爬取评论的最大数量

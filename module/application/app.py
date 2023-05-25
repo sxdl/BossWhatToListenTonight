@@ -28,8 +28,12 @@ def index_post():
 @app.route('/home.html/<uid>', methods=['GET'])
 def home_get(uid):
     user_avatar, user_nickname = statistics.get_user_profile(uid)
-    return render_template('home.html', avatarUrl=user_avatar, nickname=user_nickname)
+    return render_template('home.html', avatarUrl=user_avatar, nickname=user_nickname, uid=uid)
 
 
-
+@app.route('/dashboard.html/<uid>')
+def dashboard_get(uid):
+    rank_fav_art = statistics.rank_fav_ar(uid, limit=3)
+    print(f"dashboard: {rank_fav_art}")
+    return render_template('dashboard.html', artists=rank_fav_art)
 
