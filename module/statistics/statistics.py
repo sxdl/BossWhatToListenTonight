@@ -10,6 +10,7 @@ from module.musicPlatform.neteaseCloudMusicApi import NeteaseCloudMusicProxy
 from module.common import function, fileio
 import json
 from module.common.const import SONG_INFO_STORAGE_DIR, USER_FAV_SONG_DIR, FAV_SONG_FILE
+from wordcloud import WordCloud
 
 ncp = NeteaseCloudMusicProxy()
 ncp.startup()
@@ -137,6 +138,63 @@ def rank_fav_song(uid, limit=10):
     if len(fav_songs) > limit:
         fav_songs = fav_songs[:limit]
     return fav_songs
+
+
+def gen_tag_count(uid):
+    """
+    生成用户标签频次统计并保存
+    :param uid:
+    :return:
+    """
+    tag_count = dict()
+    melody_style = dict()
+    songBizTag = dict()
+    language = dict()
+    bpm = dict()
+    # 根据uid获取用户收藏音乐列表
+    fav_songs = get_user_fav_song(uid)
+    # 获取列表中每首音乐的wiki信息
+    # 将每个wiki词条分别存储在字典中计数
+    for song in fav_songs:
+        song_data = load_song_info(song)
+        song_wiki = get_song_wiki(song_data)
+        for itm in song_wiki['melody_style']:
+            melody_style[itm] = melody_style.get(itm, 0) + 1
+        for itm in song_wiki['songBizTag']:
+            songBizTag[itm] = songBizTag.get(itm, 0) + 1
+        for itm in song_wiki['language']:
+            language[itm] = language.get(itm, 0) + 1
+        if song_wiki['bpm']:
+            bpm[song_wiki['bpm']] = bpm.get(song_wiki['bpm'], 0) + 1
+    # tag_count['melody_style'] = sorted(melody_style.items(), key=lambda x: (x[1], x[0]), reverse=True)
+    # tag_count['melody_style'] = [{x: y} for x, y in tag_count['melody_style']]
+    #
+    # tag_count['songBizTag'] = sorted(songBizTag.items(), key=lambda x: (x[1], x[0]), reverse=True)
+    # tag_count['songBizTag'] = [{x: y} for x, y in tag_count['songBizTag']]
+    #
+    # tag_count['language'] = sorted(language.items(), key=lambda x: (x[1], x[0]), reverse=True)
+    # tag_count['language'] = [{x: y} for x, y in tag_count['language']]
+    #
+    # tag_count['bpm'] = sorted(bpm.items(), key=lambda x: (x[1], x[0]), reverse=True)
+    # tag_count['bpm'] = [{x: y} for x, y in tag_count['bpm']]
+
+    # 生成词云图并保存
+    melody_style_cloud = WordCloud(font_path='../../asset/msyh.ttc', width=1000, height=700,
+                                   background_color="white").generate_from_frequencies(melody_style)
+    melody_style_cloud.to_file(f"{USER_FAV_SONG_DIR}{uid}/melody_style.jpg")
+    songBizTag_cloud = WordCloud(font_path='../../asset/msyh.ttc', width=1000, height=700,
+                                   background_color="white").generate_from_frequencies(songBizTag)
+    songBizTag_cloud.to_file(f"{USER_FAV_SONG_DIR}{uid}/songBizTag.jpg")
+    language_cloud = WordCloud(font_path='../../asset/msyh.ttc', width=1000, height=700,
+                                   background_color="white").generate_from_frequencies(language)
+    language_cloud.to_file(f"{USER_FAV_SONG_DIR}{uid}/language.jpg")
+    # 保存tag词频dict到用户本地文件夹中
+    fileio.dump_pickle(tag_count, f"{USER_FAV_SONG_DIR}{uid}/tag_count.pickle")
+
+
+def load_tag_count(uid):
+    return fileio.load_pickle(f"{USER_FAV_SONG_DIR}{uid}/tag_count.pickle")
+
 
 def get_song_ar(song_data):
     return song_data.get('ar')

@@ -1,6 +1,6 @@
 """
 test.py.py
-author: sxdl
+author: Zicheng Zeng
 date: 2023/4/21
 description: script for test only
 """
@@ -28,6 +28,17 @@ from module.statistics import statistics
 # # ncm.login_qr()
 # playlist = ncm.get_song_wiki('1396905934')
 # print(playlist)
+
+
+def test_tag_count(uid):
+    """
+    test for 生成词云图
+    :param uid:
+    :return:
+    """
+    statistics.gen_tag_count(uid)
+    time.sleep(3)
+
 
 def test_fav_song(uid):
     """
@@ -77,6 +88,7 @@ if __name__ == "__main__":
 
     time.sleep(3)
 
+    # test_tag_count("6280920254")
     # test_song_info("1854902495")
     # test_fav_song("1526176774")
     # test_fav_art("1526176774")

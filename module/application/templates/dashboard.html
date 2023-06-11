@@ -3,6 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <title>User Data Visualization</title>
+  <!-- 引入 ECharts 主文件 -->
+  <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+  <!-- 引入词云图插件 -->
+  <script src="https://cdn.jsdelivr.net/npm/echarts-wordcloud/dist/echarts-wordcloud.min.js"></script>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -104,50 +109,7 @@
 
   <div class="section">
     <h2 class="section-title">Genre Tags Word Cloud</h2>
-    <div class="word-cloud">
-      <!-- Add your word cloud implementation-->
-        <div id="wordCloud"></div>
-    </div>
+    <img src="/static/melody_style.jpg">
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/echarts@5.3.0/dist/echarts.min.js"></script>
-  <script>
-    // Word cloud data
-    const wordCloudData = [
-      { name: "Pop", value: 30 },
-      { name: "Rock", value: 20 },
-      { name: "Hip Hop", value: 15 },
-      { name: "R&B", value: 12 },
-      // Add more word cloud data
-    ];
-
-    // Word cloud options
-    const option = {
-      series: [{
-        type: 'wordCloud',
-        shape: 'circle',
-        left: 'center',
-        top: 'center',
-        width: '80%',
-        height: '80%',
-        data: wordCloudData,
-        textStyle: {
-          normal: {
-            fontFamily: 'Arial, sans-serif',
-            fontWeight: 'bold',
-            color: function () {
-              return 'rgb(' +
-                Math.round(Math.random() * 160) +
-                ', ' + Math.round(Math.random() * 160) +
-                ', ' + Math.round(Math.random() * 160) + ')';
-            }
-          }
-        }
-      }]
-    };
-
-    // Initialize and render the word cloud chart
-    const wordCloudChart = echarts.init(document.getElementById('wordCloud'));
-    wordCloudChart.setOption(option);
-  </script>
 </body>
 </html>

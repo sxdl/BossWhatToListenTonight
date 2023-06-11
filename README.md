@@ -8,7 +8,8 @@
 - [x] #Fix: 评论信息编码问题：改用pickle格式存储
 - [x] #Feature: 用户听歌歌手排行功能
 - [x] #Test: 测试用户听歌歌手排行功能
-- [ ] #Feature: 根据歌手id获取歌手详情
+- [x] #Feature: 根据歌手id获取歌手详情
+- [ ] #Feature: 生成词云图
 
 ## Project Plan
 

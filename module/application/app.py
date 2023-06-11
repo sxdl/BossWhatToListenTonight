@@ -1,6 +1,6 @@
 """
 app.py
-author: sxdl
+author: Zicheng Zeng
 date: 2023/5/6
 description: 
 """
@@ -28,6 +28,7 @@ def index_post():
 @app.route('/home.html/<uid>', methods=['GET'])
 def home_get(uid):
     user_avatar, user_nickname = statistics.get_user_profile(uid)
+    statistics.gen_tag_count(uid)
     return render_template('home.html', avatarUrl=user_avatar, nickname=user_nickname, uid=uid)
 
 
@@ -35,6 +36,9 @@ def home_get(uid):
 def dashboard_get(uid):
     rank_fav_art = statistics.rank_fav_ar(uid, limit=10)
     rank_fav_songs = statistics.rank_fav_song(uid, limit=10)
+    tag_count = statistics.load_tag_count(uid)
+    melody_style_cloud = ""
     # print(f"dashboard: {rank_fav_art}")
-    return render_template('dashboard.html', artists=rank_fav_art, song_list=rank_fav_songs)
+    return render_template('dashboard.html', artists=rank_fav_art, song_list=rank_fav_songs, tag_count=tag_count,
+                           melody_style_cloud=melody_style_cloud)
 
