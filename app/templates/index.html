@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Index{% endblock %}
+{% block css %}{% endblock %}
+{% block body %}
+{{ super() }}
+<!--
+    <div class="middle-content col-md-5">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">个人听歌偏好分析</h4>
+
+                <form class="forms-sample" method="post" action="/">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="uid" name="uid" placeholder="输入网易云音乐uid" required></div>
+                    <div class="middle-element">
+                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                        <button class="btn btn-dark margin-left">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+-->
+    <div class="container-scroller">
+      <div class="container-fluid page-body-wrapper full-page-wrapper">
+        <div class="row w-100 m-0">
+          <div class="content-wrapper full-page-wrapper d-flex align-items-center auth login-bg">
+            <div class="card col-lg-4 mx-auto">
+              <div class="card-body px-5 py-5">
+                <h3 class="card-title text-left mb-5">个人听歌偏好分析</h3>
+                <form method="post" action="/">
+                  <div class="form-group">
+                    <label>输入网易云音乐uid *</label>
+                    <input type="text" class="form-control p_input mb-4" id="uid" name="uid" required>
+                  </div>
+                  <div class="text-center">
+                    <button type="submit" class="btn btn-primary btn-block enter-btn">Submit</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- content-wrapper ends -->
+        </div>
+        <!-- row ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+
+{% endblock %}

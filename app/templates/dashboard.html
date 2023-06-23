@@ -1,0 +1,164 @@
+{% extends "base-page.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block style %}
+
+{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="static/css/jquery-jvectormap.css">
+<link rel="stylesheet" href="static/css/flag-icon.min.css">
+<link rel="stylesheet" href="static/css/owl.carousel.min.css">
+<link rel="stylesheet" href="static/css/owl.theme.default.min.css">
+{% endblock %}
+{% block content_rows %}
+<div class="row">
+    <div class="col-lg-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">Top Favorite Artists</h2>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Avatar</th>
+                            <th>Artist</th>
+                            <th>Occurrences</th>
+                            <th>Times</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for ar in artists %}
+                        <tr>
+                            <td class="py-1"><img src="{{ ar[0][2] }}" alt="{{ ar[0][1] }}"></td>
+                            <td><a href="https://music.163.com/#/artist?id={{ ar[0][0] }}"> {{ ar[0][1] }} </a></td>
+                            <td>
+                                <div class="progress">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: {{ ar[1] }}%"></div>
+                                </div>
+                            </td>
+                            <td> {{ ar[1] }} </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">Top Played Songs</h2>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Cover</th>
+                            <th>Name</th>
+                            <th>Frequency</th>
+                            <th>Play Count</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for song in song_list %}
+                        <tr>
+                            <td class="py-1"><img style="border-radius: 0;" src="{{ song['song']['al']['picUrl'] }}" alt="{{ song['song']['name'] }}"></td>
+                            <td><a href="/about-song?id={{ song['song']['id'] }}">{{ song['song']['name'] }}</a></td>
+                            <td>
+                                <div class="progress">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: {{ song['playCount'] / 5 }}%"></div>
+                                </div>
+                            </td>
+                            <td> {{ song['playCount'] }} </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-8 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <div class="chartjs-size-monitor">
+                <div class="chartjs-size-monitor-expand">
+                    <div class=""></div>
+                </div>
+                <div class="chartjs-size-monitor-shrink">
+                    <div class=""></div>
+                </div>
+            </div>
+            <h4 class="card-title">Bpm</h4>
+            <canvas id="lineChart" style="height: 354px; display: block; width: 709px;" width="1063" height="531" class="chartjs-render-monitor"></canvas>
+        </div>
+    </div>
+</div>
+    <div class="col-md-6 col-xl-4 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Styles & Tags</h4>
+            <div class="owl-carousel owl-theme full-width owl-carousel-dash portfolio-carousel owl-loaded owl-drag" id="owl-carousel-basic">
+                <div class="owl-stage-outer">
+                    <div class="owl-stage" style="transform: translate3d(-1111px, 0px, 0px); transition: all 0.25s ease 0s; width: 2594px;">
+                        <div class="owl-item cloned" style="width: 360.463px; margin-right: 10px;">
+                            <div class="item">
+                                <img src="{{ tag_cloud_path }}melody_style.jpg" alt="">
+                            </div>
+                        </div>
+                        <div class="owl-item cloned" style="width: 360.463px; margin-right: 10px;">
+                            <div class="item">
+                                <img src="{{ tag_cloud_path }}language.jpg" alt="">
+                            </div>
+                        </div>
+                        <div class="owl-item" style="width: 360.463px; margin-right: 10px;">
+                            <div class="item">
+                                <img src="{{ tag_cloud_path }}songBizTag.jpg" alt="">
+                            </div>
+                        </div>
+                        <div class="owl-item active" style="width: 360.463px; margin-right: 10px;">
+                            <div class="item">
+                                <img src="{{ tag_cloud_path }}melody_style.jpg" alt="">
+                            </div>
+                        </div>
+                        <div class="owl-item" style="width: 360.463px; margin-right: 10px;">
+                            <div class="item">
+                                <img src="{{ tag_cloud_path }}language.jpg" alt="">
+                            </div>
+                        </div>
+                        <div class="owl-item cloned" style="width: 360.463px; margin-right: 10px;">
+                            <div class="item">
+                                <img src="{{ tag_cloud_path }}songBizTag.jpg" alt="">
+                            </div>
+                        </div>
+                        <div class="owl-item cloned" style="width: 360.463px; margin-right: 10px;">
+                            <div class="item">
+                                <img src="{{ tag_cloud_path }}melody_style.jpg" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="owl-nav">
+                    <button type="button" role="presentation" class="owl-prev"><i class="mdi mdi-chevron-left"></i></button>
+                    <button type="button" role="presentation" class="owl-next"><i class="mdi mdi-chevron-right"></i></button>
+                </div>
+                <div class="owl-dots disabled"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script src="/static/js/progressbar.min.js"></script>
+<script src="/static/js/jquery-jvectormap.min.js"></script>
+<script src="/static/js/jquery-jvectormap-world-mill-en.js"></script>
+<script src="/static/js/owl.carousel.min.js"></script>
+<script src="/static/js/Chart.min.js"></script>
+<script src="/static/js/chart.js"></script>
+<script src="/static/js/dashboard.js"></script>
+{% endblock %}

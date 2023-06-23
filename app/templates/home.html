@@ -1,0 +1,18 @@
+{% extends "base-page.html" %}
+{% block title %}Spider{% endblock %}
+
+{% block style %}{% endblock %}
+
+{% block body %}
+{{ super() }}
+    <h1>Welcome</h1>
+    <div id="logo"></div>
+    <div>{{ nickname }}</div>
+    <a href="/spider/{{ uid }}?reload=True&download=True">更新听歌数据</a>
+    <a href="/dashboard/{{ uid }}">点击查看听歌报告</a>
+    <a href="/recommend/{{ uid }}">歌单选歌</a>
+    <a>歌曲工厂</a>
+{% endblock %}
+
+{% block content_rows %}
+{% endblock %}

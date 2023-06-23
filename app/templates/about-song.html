@@ -1,0 +1,176 @@
+{% extends "base-page.html" %}
+{% block title %}About-song{% endblock %}
+
+{% block style %}
+img {
+  width: 100%;
+  height: 70%;
+}
+
+.wordcloud {
+  width: 100%;
+  height: 60%;
+}
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="/static/css/jquery-jvectormap.css">
+<link rel="stylesheet" href="/static/css/flag-icon.min.css">
+<link rel="stylesheet" href="/static/css/owl.carousel.min.css">
+<link rel="stylesheet" href="/static/css/owl.theme.default.min.css">
+{% endblock %}
+
+
+
+{% block content_rows %}
+<div class="row">
+    <div class="col-md-3 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">{{ songinfo['name'] }}</h2>
+                <p>{% for artist in song['ar'] %} {{ artist['name'] }} {% endfor %}</p>
+                <img src="{{ songinfo['picUrl'] }}" alt="{{ songinfo['name'] }}">
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 d-flex align-items-stretch">
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Tag</h4>
+                        <div class="row">
+                            <div class="col-8 col-sm-12 col-xl-8 my-auto">
+                                <div class="d-flex d-sm-block d-md-flex align-items-center">
+                                    <h3 class="mb-0">{% for tag in song['wiki']['songBizTag'] %} {{ tag }} {% endfor %}</h3>
+                                </div>
+                            </div>
+                            <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
+                                <i class="icon-lg mdi mdi-tag-multiple text-danger ml-auto"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Style</h4>
+                        <div class="row">
+                            <div class="col-8 col-sm-12 col-xl-8 my-auto">
+                                <div class="d-flex d-sm-block d-md-flex align-items-center">
+                                    <h3 class="mb-0">{% for style in song['wiki']['melody_style'] %} {{ style }} {% endfor %}</h3>
+                                </div>
+                            </div>
+                            <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
+                                <i class="icon-lg mdi mdi-flower text-primary ml-auto"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Bpm</h4>
+                        <div class="row">
+                            <div class="col-8 col-sm-12 col-xl-8 my-auto">
+                                <div class="d-flex d-sm-block d-md-flex align-items-center">
+                                    <h2 class="mb-0">{{ song['wiki']['bpm'] }}</h2>
+                                </div>
+                            </div>
+                            <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
+                                <i class="icon-lg mdi mdi-heart-pulse text-success ml-auto"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Comments</h4>
+                <img class="wordcloud" src="/static/songs/{{ sid }}/comment.jpg" alt="wordcloud">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                <h4 class="card-title">Gender of Users Who Comment</h4>
+                <canvas id="pieChartGender" style="height: 196px; display: block; width: 392px;" width="588" height="294" class="chartjs-render-monitor"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                <h4 class="card-title">Village Age of Users Who Comment</h4>
+                <canvas id="barChartAge" style="height: 196px; display: block; width: 392px;" width="588" height="294" class="chartjs-render-monitor"></canvas>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-lg-6 grid-margin ">
+        <div class="card">
+            <div class="card-body"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                <h4 class="card-title">Comment Time Distribution</h4>
+                <canvas id="lineChartTime" style="height: 196px; display: block; width: 392px;" width="588" height="294" class="chartjs-render-monitor"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 grid-margin">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Area Distribution</h4>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Province</th>
+                                    <th>Occurrences</th>
+                                    <th>Rank</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for a in area %}
+                                <tr>
+                                    <td> {{ code[a[0]] }} </td>
+                                    <td class="text-left"> {{ a[1] }} </td>
+                                    <td class="text-left font-weight-medium"> #{{ loop.index }} </td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script src="/static/js/Chart.min.js"></script>
+<script src="/static/js/progressbar.min.js"></script>
+<script src="/static/js/jquery-jvectormap.min.js"></script>
+<script src="/static/js/jquery-jvectormap-world-mill-en.js"></script>
+<script src="/static/js/owl.carousel.min.js"></script>
+
+<script src="/static/js/chart-song.js"></script>
+<script src="/static/js/dashboard.js"></script>
+
+{% endblock %}

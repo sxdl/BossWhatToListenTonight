@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+{% block title %}{% endblock %}
+{% block css %}{% endblock %}
+{% block body %}
+{{ super() }}
+<div class="container-scroller">
+      <!-- partial:partials/_sidebar.html -->
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
+          <a class="sidebar-brand brand-logo" href="/dashboard"><img src="/static/picture/logo.svg" alt="logo"></a>
+          <a class="sidebar-brand brand-logo-mini" href="/dashboard"><img src="/static/picture/logo-mini.svg" alt="logo"></a>
+        </div>
+        <ul class="nav">
+          <li class="nav-item profile">
+            <div class="profile-desc">
+              <div class="profile-pic">
+                <div class="count-indicator">
+                  <img class="img-xs rounded-circle " src="{{ profile['avatar'] }}" alt="">
+                  <span class="count bg-success"></span>
+                </div>
+                <div class="profile-name">
+                  <h5 class="mb-0 font-weight-normal">{{ profile['nickname'] }}</h5>
+                  <span>Lv.{{ profile['level'] }}</span>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="nav-item nav-category">
+            <span class="nav-link">Navigation</span>
+          </li>
+          <li class="nav-item menu-items">
+            <a class="nav-link" href="/spider">
+              <span class="menu-icon">
+                <i class="mdi mdi-cloud-download"></i>
+              </span>
+              <span class="menu-title">Spider</span>
+            </a>
+          </li>
+          <li class="nav-item menu-items">
+            <a class="nav-link" href="/dashboard">
+              <span class="menu-icon">
+                <i class="mdi mdi-speedometer"></i>
+              </span>
+              <span class="menu-title">Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item menu-items">
+            <a class="nav-link" href="/recommend">
+              <span class="menu-icon">
+                <i class="mdi mdi-heart-box-outline"></i>
+              </span>
+              <span class="menu-title">Songs For You</span>
+            </a>
+          </li>
+          <li class="nav-item menu-items">
+            <a class="nav-link" href="/factory">
+              <span class="menu-icon">
+                <i class="mdi mdi-factory"></i>
+              </span>
+              <span class="menu-title">Factory</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_navbar.html -->
+        <nav class="navbar p-0 fixed-top d-flex flex-row">
+          <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
+            <a class="navbar-brand brand-logo-mini" href=""><img src="static/picture/logo-mini.svg" alt="logo"></a>
+          </div>
+          <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
+            <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+              <span class="mdi mdi-menu"></span>
+            </button>
+            <h3 class="navbar-nav">BOSS What To Listen Tonight ヾ(´･ω･｀)ﾉ</h3>
+            <ul class="navbar-nav navbar-nav-right">
+              <li class="nav-item nav-settings d-none d-lg-block">
+                <a class="nav-link" href="https://github.com/sxdl/BossWhatToListenTonight">
+                  <i class="mdi mdi-github-circle"></i>
+                </a>
+              </li>
+              <li class="nav-item border-left">
+                <a class="nav-link" href="mailto:ftjackzeng@mail.scut.edu.cn">
+                  <i class="mdi mdi-email"></i>
+                </a>
+              </li>
+              <li class="nav-item  border-left">
+                <a class="nav-link" href="https://music.163.com/#/user/home?id={{ profile['uid'] }}">
+                  <i class="mdi mdi-headphones"></i>
+                </a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
+                  <div class="navbar-profile">
+                    <img class="img-xs rounded-circle" src="{{ profile['avatar'] }}" alt="">
+                    <p class="mb-0 d-none d-sm-block navbar-profile-name">{{ profile['nickname'] }}</p>
+                    <i class="mdi mdi-menu-down d-none d-sm-block"></i>
+                  </div>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="profileDropdown">
+                  <a class="dropdown-item preview-item" href="/">
+                    <div class="preview-thumbnail">
+                      <div class="preview-icon bg-dark rounded-circle">
+                        <i class="mdi mdi-logout text-danger"></i>
+                      </div>
+                    </div>
+                    <div class="preview-item-content">
+                      <p class="preview-subject mb-1">Log out</p>
+                    </div>
+                  </a>
+                  <div class="dropdown-divider"></div>
+                </div>
+              </li>
+            </ul>
+            <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+              <span class="mdi mdi-format-line-spacing"></span>
+            </button>
+          </div>
+        </nav>
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+              {% block content_rows %}{% endblock %}
+          </div>
+          <!-- content-wrapper ends -->
+          <!-- partial:partials/_footer.html -->
+          <footer class="footer">
+            <div class="d-sm-flex justify-content-center justify-content-sm-between">
+              Copyright &copy; 2023.sxdl-JackZeng All rights reserved.<a target="_blank" href="https://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a>
+
+            </div>
+          </footer>
+          <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+</div>
+{% endblock %}

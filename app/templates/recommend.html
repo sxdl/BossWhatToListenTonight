@@ -1,0 +1,68 @@
+{% extends "base-page.html" %}
+{% block title %}Songs For You{% endblock %}
+
+{% block style %}{% endblock %}
+
+{% block content_rows %}
+
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">Related Playlists</h2>
+                <p class="card-description"> Pick Potential Songs You Like. Wait for a few minutes to download.</p>
+                {% if playlists %}
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Cover</th>
+                            <th>Playlist</th>
+                            <th>Creator</th>
+                            <th>Option</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for playlist in playlists %}
+                        <tr>
+                            <td><img class="img-lg" style="border-radius: 0; width: 96px; height: 96px" src="{{ playlist['coverImgUrl'] }}"></td>
+                            <td>{{ playlist['name'] }}</td>
+                            <td>{{ playlist['creator']['nickname'] }}</td>
+                            <td><a class="btn btn-success" href="/recommend?id={{ playlist['id'] }}">Pick Songs For Me</a></td>
+
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% endif %}
+                {% if songs %}
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Cover</th>
+                            <th>Name</th>
+                            <th>Recommend Score</th>
+                            <th>Option</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for song in songs %}
+                        <tr>
+                            <td><img class="img-lg" style="border-radius: 0; width: 96px; height: 96px" src="{{ song[0]['picUrl'] }}"></td>
+                            <td>{{ song[0]['name'] }}</td>
+                            <td>{{ (song[1] * 100)|round(2) }}</td>
+                            <td><a class="btn btn-success" href="https://music.163.com/#/song?id={{ song[0]['id'] }}">Play!</a></td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
