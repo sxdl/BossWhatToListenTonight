@@ -36,6 +36,12 @@ def get_user_fav_song(uid, reload=False):
     :return: list
     """
     file_dir = f"local/user/{uid}"
+    if not os.path.exists('local'):
+        os.mkdir('local')
+    if not os.path.exists('local/user'):
+        os.mkdir('local/user')
+    if not os.path.exists('local/songs'):
+        os.mkdir('local/songs')
     if not os.path.exists(file_dir):
         print("make dir")
         os.mkdir(file_dir)
