@@ -46,13 +46,15 @@ BOSW2T(BOSS What To Listen Tonight) is a personal songs data analysis programme 
 
 `venv/Scripts/activate`
 
-`pip install -r requirements`
+`pip install -r requirements.txt`
 
 ### Run
 
 `venv/Scripts/activate`
 
 `python main.py production`
+
+`localhost:5000`
 
 ## Credit
 
