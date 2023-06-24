@@ -5,7 +5,6 @@ date: 2023/6/19
 description: 
 """
 from .neteaseCloudMusicApi import NeteaseCloudMusicProxy
-import os
 
 
 def create_app():
