@@ -175,6 +175,8 @@ class NeteaseCloudMusicProxy:
                 songBizTag.append(item['uiElement']['mainTitle']['title'])
         except IndexError:
             pass
+        except TypeError:
+            pass
 
         language = []  # 语种
         bpm = None
